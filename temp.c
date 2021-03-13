@@ -7,7 +7,7 @@ typedef struct gradebook{
     char studentName[20][20];
     float score[20][20];
     float finalGrade[20];
-    char grade;
+    char *grade[20];
 }Gradebook;
 
 
@@ -43,7 +43,7 @@ void getDetails(Gradebook *a, int n){
         
         
     }
-}
+};
 
 void calcNo(Gradebook *a, int n){
     int i, j, k;
@@ -53,17 +53,48 @@ void calcNo(Gradebook *a, int n){
             temp1 = 0;
             temp2 = 0;
             for(k = 0; k < a[i].noOfScores; k ++){
-                printf("Score:%f  weight:%f\n",a[i].score[j][k],a[i].weight[k]);
                 temp1 += a[i].score[j][k] * a[i].weight[k];
                 temp2 += a[i].weight[k];
                 
             }
             a[i].finalGrade[j] = temp1/temp2;
         }
-        
-        
     }
-    
+};
+
+void findGrade(Gradebook *a, int n){
+    int i, j;
+    for(i = 0; i < n; i++){
+        for(j = 0;j < a[i].noOfStudent;j++){
+            if(0 <= a[i].finalGrade[j] && a[i].finalGrade[j] < 60){
+                a[i].grade[j] = "F";
+            }
+            else if(60 <= a[i].finalGrade[j] && a[i].finalGrade[j] < 70){
+                a[i].grade[j] = "D";
+            }
+            else if(70 <= a[i].finalGrade[j] && a[i].finalGrade[j] < 80){
+                a[i].grade[j] = "C";
+            }
+            else if(80 <= a[i].finalGrade[j] && a[i].finalGrade[j] < 90){
+                a[i].grade[j] = "B";
+            }
+            else if(90 <= a[i].finalGrade[j] && a[i].finalGrade[j] <= 100){
+                a[i].grade[j] = "A";
+            }
+        }
+    }
+}
+
+void  showOutput(Gradebook *a, int n){
+    int i, j;
+    for(i = 0; i < n; i++){
+        printf("%s\n", a[i].subjectName);
+        for(j = 0;j < a[i].noOfStudent;j++){
+            printf("%s\t", a[i].studentName[j]);
+            printf("%f\t", a[i].finalGrade[j]);
+            printf("%s\n", a[i].grade[j]);
+        }
+    }
 }
 
 int main(){
@@ -72,6 +103,8 @@ int main(){
     Gradebook cases[noOfCases] ;
     getDetails(cases, noOfCases);
     calcNo(cases, noOfCases);
+    findGrade(cases, noOfCases);
+    showOutput(cases, noOfCases);
     
     
     return 0;
