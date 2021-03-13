@@ -47,16 +47,23 @@ void getDetails(Gradebook *a, int n){
 
 void calcNo(Gradebook *a, int n){
     int i, j, k;
-    float temp;
+    float temp1, temp2;
     for(i = 0; i < n; i++){
         for(j = 0; j < a[i].noOfStudent; j++){
-            temp = 0;
+            temp1 = 0;
+            temp2 = 0;
             for(k = 0; k < a[i].noOfScores; k ++){
-                temp += a[i].score[j][k] * a[i].weight[k];
+                printf("Score:%f  weight:%f\n",a[i].score[j][k],a[i].weight[k]);
+                temp1 += a[i].score[j][k] * a[i].weight[k];
+                temp2 += a[i].weight[k];
+                
             }
-            a[i].finalGrade[j] = temp;
+            a[i].finalGrade[j] = temp1/temp2;
         }
+        
+        
     }
+    
 }
 
 int main(){
