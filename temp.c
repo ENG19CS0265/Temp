@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 
 typedef struct gradebook{
@@ -7,7 +6,10 @@ typedef struct gradebook{
     float weight[20];
     char studentName[20][20];
     float score[20][20];
+    float finalGrade[20];
+    char grade;
 }Gradebook;
+
 
 int takeOfInput(){
   int n;
@@ -27,7 +29,8 @@ void getDetails(Gradebook *a, int n){
         for(j = 0; j < a[i].noOfScores; j++){
             scanf("%f", &a[i].weight[j]);
         }
-        //
+        
+        //Student details
         printf("Please Enter students details\n");
         for(j = 0; j < a[i].noOfStudent; j++){
             printf("Enter student name:\n");
@@ -37,25 +40,32 @@ void getDetails(Gradebook *a, int n){
                 scanf("%f", &a[i].score[j][k]);
             }
         }
-        //
-        printf("Test Test- - - - - ");
-        for(j = 0; j < a[i].noOfStudent; j++){
-            printf("student name:%s\n", a[i].studentName[j]);
-            
-            printf("scores\n");
-            for(k = 0; k < a[i].noOfScores; k++){
-                printf("%f", a[i].score[j][k]);
-            }
-        }
         
+        
+    }
+}
+
+void calcNo(Gradebook *a, int n){
+    int i, j, k;
+    float temp;
+    for(i = 0; i < n; i++){
+        for(j = 0; j < a[i].noOfStudent; j++){
+            temp = 0;
+            for(k = 0; k < a[i].noOfScores; k ++){
+                temp += a[i].score[j][k] * a[i].weight[k];
+            }
+            a[i].finalGrade[j] = temp;
+        }
     }
 }
 
 int main(){
     int noOfCases;
     noOfCases = takeOfInput();
-    Gradebook cases[noOfCases];
+    Gradebook cases[noOfCases] ;
     getDetails(cases, noOfCases);
+    calcNo(cases, noOfCases);
+    
     
     return 0;
 }
