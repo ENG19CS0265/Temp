@@ -91,7 +91,7 @@ void  showOutput(Gradebook *a, int n){
         printf("%s\n", a[i].subjectName);
         for(j = 0;j < a[i].noOfStudent;j++){
             printf("%s\t", a[i].studentName[j]);
-            printf("%f\t", a[i].finalGrade[j]);
+            printf("%.2f\t", a[i].finalGrade[j]);
             printf("%s\n", a[i].grade[j]);
         }
     }
